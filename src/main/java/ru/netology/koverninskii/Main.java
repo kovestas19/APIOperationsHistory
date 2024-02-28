@@ -20,8 +20,8 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         int count = 0;
+        Transfer[] transfers = new Transfer[4];
         while (true){
-            Transfer[] transfers = new Transfer[4];
             System.out.println("Хотите сделать перевод?");
             boolean firstAnswer = scanner.nextBoolean();
             if (firstAnswer==true)  {
@@ -34,7 +34,7 @@ public class Main {
             System.out.println("Введите сумму перевода: ");
             double transferAmount = scanner.nextDouble();
             double fee = 0.01;
-            double transferFee = transferAmount * fee;
+            double transferFee = Math.ceil(transferAmount * fee*100)/100;
             System.out.println("Сумма перевода: " + transferAmount + " , комиссия за перевод: " + transferFee);
             String transferFullAmount = String.valueOf(transferAmount+transferFee);
             System.out.println("Общая сумма за перевод: " + (transferFullAmount) + " , Продолжаем?");
@@ -73,10 +73,15 @@ public class Main {
                 transfers[count] = new Transfer(transferNum, newTransfer,transferFee,transferAmount);
                 count++;
             }
-            if (count == 5){
+            if (count == 4){
                 System.out.println("5 переводов сделаны, до свидания!");
-                return;
+                break;
             }
+        }
+        for (int i = 0; i<transfers.length;i++){
+            System.out.println("Перевод номер " + (i+1) +":");
+            System.out.println("КНП: "+ transfers[i].getTransferNum() + ", Сумма перевода: " + transfers[i].getTransferAmount() + ", Комиссия за перевод: " +
+                    transfers[i].getTransferFee() + ", Статус перевода: " + transfers[i].getTransferState());
         }
 
 
